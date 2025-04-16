@@ -40,7 +40,7 @@ router.post('/login', async function(req, res, next) {
                 lastName: user.lastName,
                 role: user.role,
             } 
-            const token = jwt.sign( userData , process.env.JWT_SECRET_KEY, { expiresIn: '3h' });
+            const token = jwt.sign( userData , process.env.JWT_SECRET_KEY, { expiresIn: '6h' });
             await User.findByIdAndUpdate(user._id, {accessToken: token }, {new: true});
 
             message='login สำเร็จ'

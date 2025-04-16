@@ -63,7 +63,7 @@ router.put('/:productId', [middleware], async function(req, res, next) {
     if (quantity) {
         productDetail.quantity = quantity
     }
-    console.log(productDetail)
+    
     try {
         let product = await Product.findByIdAndUpdate(productId,productDetail, {new: true})
         message="แก้ไขข้อมูลสินค้าสำเร็จ"
@@ -127,7 +127,6 @@ router.get('/:productId/orders', [middleware], async (req, res, next) => {
   /* POST order in product || เพิ่มออเดอร์ใน product*/ 
   router.post('/:productId/orders', [middleware], async (req, res) => {
     let { productId } = req.params
-    // console.log(productId)
     let { quantity } = req.body
     if (!productId) {
         message="กรุณากรอก productId"
@@ -143,7 +142,7 @@ router.get('/:productId/orders', [middleware], async (req, res, next) => {
             message=`สินค้าไม่เพียงพอ สินค้าเหลืออยู่จำนวน ${currentProduct.quantity} ชิ้น`
             return response.sendResponse(res, 400 , message)
         }
-        const order = await Order.create({ productId, quantity});
+        const order = await Order.create({ productId, quantity, isPaid: false});
         await Product.findByIdAndUpdate(productId,{quantity: currentProduct.quantity - quantity}, {new: true})
         message="สั่งออเดอร์สำเร็จ"
         return response.sendResponse(res, 200 , message, order)

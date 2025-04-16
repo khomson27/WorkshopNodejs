@@ -3,7 +3,8 @@ const { Schema } = mongoose
 
 const orderSchema = new Schema({
     productId: {type: Schema.Types.ObjectId, ref: 'product', required: true},
-    quantity: {type: Number, required: true}
+    quantity: {type: Number, required: true},
+    isPaid: Boolean
 },{
     timestamps: true
 })
